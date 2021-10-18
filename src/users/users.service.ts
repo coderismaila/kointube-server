@@ -6,40 +6,77 @@ import { UserDto } from './dto/user.dto';
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
-  create(userDto: UserDto): Promise<User> {
-    return this.prismaService.user.create({
+
+  async create(userDto: UserDto): Promise<User> {
+    const user = await this.prismaService.user.create({
       data: userDto,
     });
+    delete user.password;
+    return user;
   }
 
-  findAll(): Promise<User[]> {
-    return this.prismaService.user.findMany();
+  async findAll(): Promise<User[]> {
+    const users = await this.prismaService.user.findMany();
+
+    users.forEach((u) => {
+      delete u.password;
+    });
+
+    return users;
   }
 
-  findById(id: string): Promise<User> {
-    return this.prismaService.user.findUnique({
+  async findById(id: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
       where: { id },
     });
+
+    delete user.password;
+
+    return user;
   }
 
-  findByEmail(email: string): Promise<User> {
-    return this.prismaService.user.findUnique({ where: { email } });
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({ where: { email } });
+
+    delete user.password;
+
+    return user;
   }
 
-  findByUserName(username: string): Promise<User> {
-    return this.prismaService.user.findUnique({
+  async findByUserName(username: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
       where: { username },
     });
+
+    delete user.password;
+
+    return user;
   }
 
-  updateUser(id: string, userDto: UserDto): Promise<User> {
-    return this.prismaService.user.update({
+  async updateUser(id: string, userDto: UserDto): Promise<User> {
+    const user = await this.prismaService.user.update({
       data: userDto,
       where: { id },
     });
+
+    delete user.password;
+
+    return user;
   }
 
-  deleteUser(id: string): Promise<User> {
-    return this.prismaService.user.delete({ where: { id } });
+  usernameOrEmail(username: string): Promise<User> {
+    return this.prismaService.user.findFirst({
+      where: {
+        OR: [{ username }, { email: username }],
+      },
+    });
+  }
+
+  async deleteUser(id: string): Promise<User> {
+    const user = await this.prismaService.user.delete({ where: { id } });
+
+    delete user.password;
+
+    return user;
   }
 }
