@@ -37,8 +37,9 @@ export class UsersService {
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.prismaService.user.findUnique({ where: { email } });
-
-    delete user.password;
+    if (user) {
+      delete user.password;
+    }
 
     return user;
   }
@@ -48,7 +49,9 @@ export class UsersService {
       where: { username },
     });
 
-    delete user.password;
+    if (user) {
+      delete user.password;
+    }
 
     return user;
   }
@@ -64,7 +67,7 @@ export class UsersService {
     return user;
   }
 
-  usernameOrEmail(username: string): Promise<User> {
+  async usernameOrEmail(username: string): Promise<User> {
     return this.prismaService.user.findFirst({
       where: {
         OR: [{ username }, { email: username }],

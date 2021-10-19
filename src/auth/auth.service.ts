@@ -16,7 +16,7 @@ export class AuthService {
     return this.jwtService.sign(payload);
   }
 
-  validateUser(email: string, password: string) {}
+  // validateUser(email: string, password: string) {}
 
   tokenResponder(id: string) {
     const token = this.generateToken(id);
@@ -43,7 +43,7 @@ export class AuthService {
     const userByUserName = await this.userService.findByUserName(
       userDto.username,
     );
-    const userByEmail = await this.userService.findByUserName(userDto.email);
+    const userByEmail = await this.userService.findByEmail(userDto.email);
 
     // checking if the email registered
     if (userByUserName) throw new BadRequestException('Username already taken');
