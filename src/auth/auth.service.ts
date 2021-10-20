@@ -12,14 +12,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  generateToken(payload: string): string {
+  generateToken(payload: any): string {
     return this.jwtService.sign(payload);
   }
 
   // validateUser(email: string, password: string) {}
 
   tokenResponder(id: string) {
-    const token = this.generateToken(id);
+    const token = this.generateToken({ id });
     return { token };
   }
 
