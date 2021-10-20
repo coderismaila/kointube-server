@@ -29,12 +29,12 @@ export class ChannelController {
 
   @Get('/:id')
   findOne(@Param('id') id: string) {
-    return this.channelService.findOne(id);
+    return this.channelService.findChannelById(id);
   }
 
   @Patch('/:id')
   update(@Param('id') id: string, @Body() updateChannelDto: UpdateChannelDto) {
-    return this.channelService.update(id, updateChannelDto);
+    return this.channelService.updateChannel(id, updateChannelDto);
   }
 
   @Delete('/:id')
