@@ -18,11 +18,10 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createVideoDto: CreateVideoDto, @Request() req) {
-    console.log(req.user);
-    // const authorid = req.user.id;
-    // createVideoDto = { ...createVideoDto, authorid };
+    createVideoDto.authorid = req.user.id;
 
     return this.videoService.createVideo(createVideoDto);
   }

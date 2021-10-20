@@ -14,19 +14,10 @@ export class CreateVideoDto {
   @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
   videoUrl: string;
 
-  @ApiProperty({ required: true, example: 'https://videourl.mp4' })
+  @ApiProperty({ required: true, example: 'https://videourl.png' })
   @IsNotEmpty()
   thumbnailUrl: string;
 
-  @ApiProperty({ required: true, example: 'https://videourl.mp4' })
-  // @IsNotEmpty()
+  // @ApiProperty({ required: false, example: 'dsfff3543feA' })
   authorid: string;
-
-  @IsDate()
-  @IsOptional()
-  createdAt: Date;
-
-  @IsDate()
-  @IsOptional()
-  updatedAt: Date;
 }
