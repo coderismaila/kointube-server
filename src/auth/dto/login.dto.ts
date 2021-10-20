@@ -7,6 +7,7 @@ export class LoginDto {
     description: 'Username or email',
     example: 'example@mail.com',
   })
+  // transforming response body text to lower case
   @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
   username: string;
 

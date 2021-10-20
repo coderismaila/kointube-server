@@ -9,6 +9,7 @@ export class UserDto {
     example: 'mak23',
   })
   @IsNotEmpty()
+  // transforming response body text to lower case
   @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
   username: string;
 
@@ -18,8 +19,19 @@ export class UserDto {
     example: 'example@mail.com',
   })
   @IsEmail()
+  // transforming response body text to lower case
   @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
   email: string;
+
+  // validating country to check if it empty or not
+  @ApiProperty({
+    required: true,
+    example: 'Nigeria',
+  })
+  @IsNotEmpty()
+  // transforming response body text to lower case
+  @Transform(({ value }) => value.toLowerCase(), { toClassOnly: true })
+  country: string;
 
   // validating if the form data is a valid email
   @ApiProperty({
