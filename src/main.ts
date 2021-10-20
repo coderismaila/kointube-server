@@ -8,7 +8,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('/api');
-  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -26,6 +25,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+
+  app.enableCors({});
 
   const PORT = process.env.PORT || 5000;
   await app.listen(PORT);
