@@ -14,16 +14,40 @@ model User {
   id       String @id @default(cuid())
   email    String @unique
   username String @unique
+  country String
+  role Role @default(User)
   password String
+  videos Video[]
 
-  channel Channel?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
   @@index([id, email, username])
 }
 
-model Channel {
-  id          String  @id @default(cuid())
-  name        String  @unique
-  author      User    @relation(fields: [authorId], references: [id])
-  authorId    String  @unique
-  description String?
+model Video {
+  id       String @id @default(cuid())
+  title String
+  videoUrl String // the video url of video uploaded to cloudinary
+  thumbnailUrl String // the image url for image uploaded to cloudinary
+  authorid String
+  author User @relation(fields: [authorid], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+// model Channel {
+//   id          String  @id @default(cuid())
+//   name        String  @unique
+//   author      User    @relation(fields: [authorId], references: [id])
+//   authorId    String  @unique
+//   description String?
+// }
+
+
+enum Role {
+  User
+  Mod
+  Admin
 }
