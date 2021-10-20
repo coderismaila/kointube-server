@@ -16,6 +16,18 @@ async function bootstrap() {
 
   app.use(helmet());
 
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    next();
+  });
+
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+  });
+
   // adding swagger documentation
   const config = new DocumentBuilder()
     .setTitle('KoinTube Api')
@@ -25,11 +37,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-
-  app.enableCors({
-    allowedHeaders: '*',
-    origin: '*',
-  });
 
   const PORT = process.env.PORT || 5000;
   await app.listen(PORT);
