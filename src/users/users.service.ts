@@ -1,11 +1,15 @@
 import { User } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { VideoService } from 'src/video/video.service';
 import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly videoService: VideoService,
+  ) {}
 
   async create(userDto: UserDto): Promise<User> {
     const user = await this.prismaService.user.create({
@@ -13,6 +17,20 @@ export class UsersService {
     });
     delete user.password;
     return user;
+  }
+
+  async findAllChannelWithVideo(): Promise<User[]> {
+    const users = await this.prismaService.user.findMany();
+
+    const videos = await this.videoService.findAllVideo();
+
+    const channelsWithVideo = users.filter(function (user) {
+      return videos.some(function (video) {
+        return user.id === video.authorid;
+      });
+    });
+
+    return channelsWithVideo;
   }
 
   async findAll(): Promise<User[]> {

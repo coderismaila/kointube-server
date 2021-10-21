@@ -40,6 +40,14 @@ export class VideoService {
     return videos;
   }
 
+  async findAllVideoByChannel(id: string): Promise<Video[]> {
+    const videos = await this.prismaService.video.findMany({
+      where: { authorid: id },
+    });
+
+    return videos;
+  }
+
   async findVideoById(id: string): Promise<Video> {
     const video = await this.prismaService.video.findUnique({ where: { id } });
 

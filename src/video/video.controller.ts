@@ -33,6 +33,11 @@ export class VideoController {
     return this.videoService.findAllVideo();
   }
 
+  @Get('/channel/:id')
+  findAllChannelVideo(@Param('id') id: string) {
+    return this.videoService.findAllVideoByChannel(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.videoService.findVideoById(id);

@@ -13,6 +13,11 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Get('/channel')
+  getAllChannelWithVideo() {
+    return this.usersService.findAllChannelWithVideo();
+  }
+
   @Get('/id/:id')
   getUserById(@Param('id') id: string) {
     return this.usersService.findById(id);
