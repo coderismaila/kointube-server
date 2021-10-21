@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConfig } from 'src/utils/jwt.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigService } from '@nestjs/config';
+import { VideoService } from 'src/video/video.service';
 
 @Module({
   imports: [JwtModule.registerAsync(jwtConfig)],
@@ -14,6 +15,7 @@ import { ConfigService } from '@nestjs/config';
   providers: [
     AuthService,
     UsersService,
+    VideoService,
     PrismaService,
     JwtStrategy,
     ConfigService,

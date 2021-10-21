@@ -28,6 +28,12 @@ export class VideoService {
     return video;
   }
 
+  findVideoByUserId(authorid: string) {
+    return this.prismaService.video.findFirst({
+      where: { authorid },
+    });
+  }
+
   async findAllVideo(): Promise<Video[]> {
     const videos = await this.prismaService.video.findMany();
 
