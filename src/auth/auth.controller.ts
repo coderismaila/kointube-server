@@ -30,7 +30,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/video')
+  @Get('/videos')
   video(@Request() req) {
     return this.videoService.findVideoByUserId(req.user.id);
   }

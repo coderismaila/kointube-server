@@ -29,7 +29,7 @@ export class VideoService {
   }
 
   findVideoByUserId(authorid: string) {
-    return this.prismaService.video.findFirst({
+    return this.prismaService.video.findMany({
       where: { authorid },
     });
   }
