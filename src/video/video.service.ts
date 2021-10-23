@@ -47,6 +47,7 @@ export class VideoService {
   async findAllVideoByChannel(id: string): Promise<Video[]> {
     const videos = await this.prismaService.video.findMany({
       where: { authorid: id },
+      include: { author: true },
     });
 
     return videos;
