@@ -1,5 +1,9 @@
 import { Video } from '.prisma/client';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
@@ -49,10 +53,13 @@ export class VideoService {
   }
 
   async findVideoById(id: string): Promise<Video> {
-    const video = await this.prismaService.video.findUnique({ where: { id } });
+    const video = await this.prismaService.video.findUnique({
+      where: { id },
+      include: { author: true },
+    });
 
     if (!video)
-      throw new BadRequestException(`video with id ${id} does not exist`);
+      throw new NotFoundException(`video with id ${id} does not exist`);
 
     return video;
   }
