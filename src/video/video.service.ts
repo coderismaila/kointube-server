@@ -39,7 +39,9 @@ export class VideoService {
   }
 
   async findAllVideo(): Promise<Video[]> {
-    const videos = await this.prismaService.video.findMany();
+    const videos = await this.prismaService.video.findMany({
+      include: { author: true },
+    });
 
     return videos;
   }
@@ -69,13 +71,17 @@ export class VideoService {
     const video = await this.prismaService.video.update({
       data: updateVideoDto,
       where: { id },
+      include: { author: true },
     });
 
     return video;
   }
 
   async deleteVideo(id: string) {
-    const video = await this.prismaService.video.delete({ where: { id } });
+    const video = await this.prismaService.video.delete({
+      where: { id },
+      include: { author: true },
+    });
 
     return video;
   }
