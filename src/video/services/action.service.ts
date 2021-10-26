@@ -71,19 +71,18 @@ export class ActionService {
   }
 
   async dislike(actionDto: ActionDto) {
-    const dislike = await this.prismaService.like.findFirst({
+    const dislike = await this.prismaService.dislike.findFirst({
       where: { userid: actionDto.userid, videoid: actionDto.videoid },
     });
 
-    const like = await this.prismaService.dislike.findFirst({
+    const like = await this.prismaService.like.findFirst({
       where: { userid: actionDto.userid, videoid: actionDto.videoid },
     });
 
-    if (like)
-      await this.prismaService.dislike.delete({ where: { id: dislike.id } });
+    if (like) await this.prismaService.like.delete({ where: { id: like.id } });
 
     if (dislike) {
-      await this.prismaService.like.delete({ where: { id: dislike.id } });
+      await this.prismaService.dislike.delete({ where: { id: dislike.id } });
       return { dislikes: await this.getLikeCount(actionDto.videoid) };
     } else {
       const dislikes = await this.prismaService.dislike.create({
