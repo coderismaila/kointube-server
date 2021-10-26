@@ -41,6 +41,18 @@ export class VideoService {
     });
   }
 
+  getChannelViews(channelid: string) {
+    return this.prismaService.video.count({
+      where: {
+        View: {
+          every: {
+            channelid,
+          },
+        },
+      },
+    });
+  }
+
   async findAllVideo(): Promise<Video[]> {
     const videos = await this.prismaService.video.findMany({
       include: { author: true, _count: true },

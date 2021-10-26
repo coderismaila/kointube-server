@@ -35,6 +35,12 @@ export class AuthController {
     return this.videoService.findVideoByUserId(req.user.id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/views')
+  views(@Request() req) {
+    return this.videoService.getChannelViews(req.user.id);
+  }
+
   @Post('/login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
