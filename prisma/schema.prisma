@@ -24,7 +24,8 @@ model User {
 
   Like    Like[]
   Dislike Dislike[]
-  View    View[]
+  user    View[]    @relation("user")
+  channel View[]    @relation("channel")
   @@index([id, email, username])
 }
 
@@ -34,7 +35,7 @@ model Video {
   videoUrl     String // the video url of video uploaded to cloudinary
   thumbnailUrl String // the image url for image uploaded to cloudinary
   authorid     String
-  author       User   @relation(fields: [authorid], references: [id])
+  author       User   @relation(fields: [authorid], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -47,8 +48,8 @@ model Like {
   id      String @id @default(cuid())
   userid  String
   videoid String
-  video   Video  @relation(fields: [videoid], references: [id])
-  user    User   @relation(fields: [userid], references: [id])
+  video   Video  @relation(fields: [videoid], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
@@ -57,18 +58,20 @@ model Dislike {
   id      String @id @default(cuid())
   userid  String
   videoid String
-  video   Video  @relation(fields: [videoid], references: [id])
-  user    User   @relation(fields: [userid], references: [id])
+  video   Video  @relation(fields: [videoid], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
 
 model View {
-  id      String @id @default(cuid())
-  userid  String
-  videoid String
-  video   Video  @relation(fields: [videoid], references: [id])
-  user    User   @relation(fields: [userid], references: [id])
+  id        String @id @default(cuid())
+  userid    String
+  videoid   String
+  channelid String
+  video     Video  @relation(fields: [videoid], references: [id], onDelete: Cascade)
+  user      User   @relation("user", fields: [userid], references: [id], onDelete: Cascade)
+  channel   User?  @relation("channel", fields: [channelid], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }

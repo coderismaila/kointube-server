@@ -69,6 +69,7 @@ export class VideoService {
     const views = await this.actionService.view({
       userid,
       videoid: video.id,
+      channelid: video.author.id,
     });
 
     const userLiked = await this.prismaService.like.findFirst({

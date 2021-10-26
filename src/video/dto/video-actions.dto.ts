@@ -7,7 +7,15 @@ export class ActionDto {
   videoid: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
+    example: 'ckv7t2sqq00080scwyfcdanu9',
+    description: 'this field is for adding channel id',
+  })
+  @IsOptional()
+  channelid: string;
+
+  @ApiProperty({
+    required: false,
     example: 'ckv7t2sqq00080scwyfcdanu9',
     description: 'this field willl be automatically provided by server @Requet',
   })
