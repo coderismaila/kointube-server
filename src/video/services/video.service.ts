@@ -4,7 +4,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { log } from 'console';
 import { PrismaService } from '../../prisma.service';
 import { CreateVideoDto } from '../dto/create-video.dto';
 import { UpdateVideoDto } from '../dto/update-video.dto';
@@ -81,7 +80,7 @@ export class VideoService {
     const video = await this.prismaService.video.update({
       data: updateVideoDto,
       where: { id },
-      include: { author: true },
+      include: { author: true, _count: true },
     });
 
     return video;
@@ -90,7 +89,7 @@ export class VideoService {
   async deleteVideo(id: string) {
     const video = await this.prismaService.video.delete({
       where: { id },
-      include: { author: true },
+      include: { author: true, _count: true },
     });
 
     return video;
