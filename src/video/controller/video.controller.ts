@@ -38,9 +38,10 @@ export class VideoController {
     return this.videoService.findAllVideoByChannel(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.videoService.findVideoById(id);
+  findOne(@Param('id') id: string, @Request() req) {
+    return this.videoService.findVideoById(id, req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)

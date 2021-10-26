@@ -8,6 +8,6 @@ import { ActionService } from './services/action.service';
 
 @Module({
   controllers: [VideoController, ActionController],
-  providers: [VideoService, UsersService, ActionService, PrismaService],
+  providers: [ActionService, VideoService, UsersService, PrismaService],
 })
 export class VideoModule {}
