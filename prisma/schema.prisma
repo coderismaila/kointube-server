@@ -11,30 +11,66 @@ generator client {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  username String @unique
-  country String
-  role Role @default(User)
+  id       String  @id @default(cuid())
+  email    String  @unique
+  username String  @unique
+  country  String
+  role     Role    @default(User)
   password String
-  videos Video[]
+  videos   Video[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  updatedAt DateTime @updatedAt
 
+  Like    Like[]
+  Dislike Dislike[]
+  View    View[]
   @@index([id, email, username])
 }
 
 model Video {
-  id       String @id @default(cuid())
-  title String
-  videoUrl String // the video url of video uploaded to cloudinary
+  id           String @id @default(cuid())
+  title        String
+  videoUrl     String // the video url of video uploaded to cloudinary
   thumbnailUrl String // the image url for image uploaded to cloudinary
-  authorid String
-  author User @relation(fields: [authorid], references: [id])
+  authorid     String
+  author       User   @relation(fields: [authorid], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Like      Like[]
+  dislike   Dislike[]
+  View      View[]
+}
+
+model Like {
+  id      String @id @default(cuid())
+  userid  String
+  videoid String
+  video   Video  @relation(fields: [videoid], references: [id])
+  user    User   @relation(fields: [userid], references: [id])
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+}
+
+model Dislike {
+  id      String @id @default(cuid())
+  userid  String
+  videoid String
+  video   Video  @relation(fields: [videoid], references: [id])
+  user    User   @relation(fields: [userid], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model View {
+  id      String @id @default(cuid())
+  userid  String
+  videoid String
+  video   Video  @relation(fields: [videoid], references: [id])
+  user    User   @relation(fields: [userid], references: [id])
+
+  createdAt DateTime @default(now())
 }
 
 // model Channel {
@@ -44,7 +80,6 @@ model Video {
 //   authorId    String  @unique
 //   description String?
 // }
-
 
 enum Role {
   User

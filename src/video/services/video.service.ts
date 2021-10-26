@@ -4,9 +4,9 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
+import { PrismaService } from '../../prisma.service';
+import { CreateVideoDto } from '../dto/create-video.dto';
+import { UpdateVideoDto } from '../dto/update-video.dto';
 
 @Injectable()
 export class VideoService {

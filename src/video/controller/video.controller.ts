@@ -9,9 +9,9 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { VideoService } from './video.service';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
+import { VideoService } from '../services/video.service';
+import { CreateVideoDto } from '../dto/create-video.dto';
+import { UpdateVideoDto } from '../dto/update-video.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 
