@@ -70,5 +70,26 @@ export class ActionService {
     }
   }
 
-  async dislike(actionDto: ActionDto) {}
+  async dislike(actionDto: ActionDto) {
+    const dislike = await this.prismaService.like.findFirst({
+      where: { userid: actionDto.userid, videoid: actionDto.videoid },
+    });
+
+    const like = await this.prismaService.dislike.findFirst({
+      where: { userid: actionDto.userid, videoid: actionDto.videoid },
+    });
+
+    if (like)
+      await this.prismaService.dislike.delete({ where: { id: dislike.id } });
+
+    if (dislike) {
+      await this.prismaService.like.delete({ where: { id: dislike.id } });
+      return { dislikes: await this.getLikeCount(actionDto.videoid) };
+    } else {
+      const dislikes = await this.prismaService.dislike.create({
+        data: actionDto,
+      });
+      return { dislikes: await this.getDislikeCount(dislikes.videoid) };
+    }
+  }
 }
