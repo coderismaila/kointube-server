@@ -65,13 +65,13 @@ model Dislike {
 }
 
 model View {
-  id        String  @id @default(cuid())
+  id        String @id @default(cuid())
   userid    String
   videoid   String
   channelid String
-  video     Video[] @relation(fields: [videoid], references: [id], onDelete: Cascade)
-  user      User[]  @relation("user", fields: [userid], references: [id], onDelete: Cascade)
-  channel   User[]  @relation("channel", fields: [channelid], references: [id], onDelete: Cascade)
+  video     Video  @relation(fields: [videoid], references: [id], onDelete: Cascade)
+  user      User   @relation("user", fields: [userid], references: [id], onDelete: Cascade)
+  channel   User   @relation("channel", fields: [channelid], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
