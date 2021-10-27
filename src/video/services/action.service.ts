@@ -10,6 +10,8 @@ export class ActionService {
     const views = await this.prismaService.view.findFirst({
       where: {
         userid: actionDto.userid,
+        channelid: actionDto.channelid,
+        videoid: actionDto.videoid,
       },
     });
 
