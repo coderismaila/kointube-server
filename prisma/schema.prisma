@@ -18,8 +18,8 @@ model User {
   password String
 
   channel_name String?
-  profile_img  String  @default("/channellogo.jpg")
-  cover_img    String  @default("/channellogo.jpg")
+  profile_img  String  @default("/https://res.cloudinary.com/dizyob2oz/image/upload/q_10/v1635425995/profile_img.jpg")
+  cover_img    String  @default("https://res.cloudinary.com/dizyob2oz/image/upload/q_10/v1635426295/cover_image.jpg")
 
   role   Role    @default(User)
   videos Video[]
