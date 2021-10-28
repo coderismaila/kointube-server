@@ -28,6 +28,16 @@ export class VideoController {
     return this.videoService.createVideo(createVideoDto);
   }
 
+  @Get('/channel_video_count/:id')
+  getChannelVideoCount(@Param('id') authorid: string) {
+    return this.videoService.getChannelVideoCount(authorid);
+  }
+
+  @Get('/total_video_count')
+  totalVideoCount() {
+    return this.videoService.getAllVideosCount();
+  }
+
   @Get()
   findAll() {
     return this.videoService.findAllVideo();

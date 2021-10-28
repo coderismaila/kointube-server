@@ -52,5 +52,9 @@ export class AuthController {
   }
 
   @Post('/signout')
-  signout() {}
+  signout() {
+    return {
+      message: 'signed out ...',
+    };
+  }
 }

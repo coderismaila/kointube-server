@@ -23,6 +23,11 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
+  @Get('/users_count')
+  getUsersCount() {
+    return this.usersService.usersCount();
+  }
+
   @Get('/email/:email')
   getUserByEmail(@Param('email') email: string) {
     return this.usersService.findByEmail(email);

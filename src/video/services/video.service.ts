@@ -41,8 +41,8 @@ export class VideoService {
     });
   }
 
-  getChannelViews(channelid: string) {
-    return this.prismaService.video.count({
+  async getChannelViews(channelid: string) {
+    const views = await this.prismaService.video.count({
       where: {
         View: {
           every: {
@@ -51,6 +51,7 @@ export class VideoService {
         },
       },
     });
+    return { views };
   }
 
   async findAllVideo(): Promise<Video[]> {
@@ -95,6 +96,20 @@ export class VideoService {
     video._count.View = views.views;
 
     return { ...video, liked: !!userLiked, disliked: !!userDisiked };
+  }
+
+  async getChannelVideoCount(authorid: string) {
+    const videos = await this.prismaService.video.count({
+      where: {
+        authorid,
+      },
+    });
+    return { videos };
+  }
+
+  async getAllVideosCount() {
+    const videos = await this.prismaService.video.count();
+    return { videos };
   }
 
   async updateVideo(id: string, updateVideoDto: UpdateVideoDto) {

@@ -74,6 +74,11 @@ export class UsersService {
     return user;
   }
 
+  async usersCount() {
+    const users = await this.prismaService.user.count();
+    return { users };
+  }
+
   async updateUser(id: string, userDto: UserDto): Promise<User> {
     const user = await this.prismaService.user.update({
       data: userDto,
