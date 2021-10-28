@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
@@ -39,7 +40,7 @@ export class UsersController {
   }
 
   @Patch('/:id')
-  updateUser(@Param('id') id: string, @Body() userDto: UserDto) {
+  updateUser(@Param('id') id: string, @Body() userDto: UpdateUserDto) {
     return this.usersService.updateUser(id, userDto);
   }
 
