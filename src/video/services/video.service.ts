@@ -57,6 +57,9 @@ export class VideoService {
   async findAllVideo(): Promise<Video[]> {
     const videos = await this.prismaService.video.findMany({
       include: { author: true, _count: true },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
     return videos;
@@ -66,6 +69,9 @@ export class VideoService {
     const videos = await this.prismaService.video.findMany({
       where: { authorid: id },
       include: { author: true, _count: true },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
 
     return videos;
