@@ -58,7 +58,7 @@ export class VideoService {
     const videos = await this.prismaService.video.findMany({
       include: { author: true, _count: true },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     });
 
@@ -70,7 +70,7 @@ export class VideoService {
       where: { authorid: id },
       include: { author: true, _count: true },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     });
 
