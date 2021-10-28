@@ -11,13 +11,18 @@ generator client {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  email    String  @unique
-  username String  @unique
+  id       String @id @default(cuid())
+  email    String @unique
+  username String @unique
   country  String
-  role     Role    @default(User)
   password String
-  videos   Video[]
+
+  channel_name String?
+  profile_img  String  @default("/channellogo.jpg")
+  cover_img    String  @default("/channellogo.jpg")
+
+  role   Role    @default(User)
+  videos Video[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -26,6 +31,9 @@ model User {
   Dislike Dislike[]
   user    View[]    @relation("user")
   channel View[]    @relation("channel")
+
+  subscriber Subscribe[] @relation("subscriber")
+  author     Subscribe[] @relation("author")
   @@index([id, email, username])
 }
 
@@ -76,13 +84,17 @@ model View {
   createdAt DateTime @default(now())
 }
 
-// model Channel {
-//   id          String  @id @default(cuid())
-//   name        String  @unique
-//   author      User    @relation(fields: [authorId], references: [id])
-//   authorId    String  @unique
-//   description String?
-// }
+model Subscribe {
+  id           String @id @default(cuid())
+  authorid     String
+  subscriberid String
+
+  subscriber User @relation("subscriber", fields: [subscriberid], references: [id])
+  author     User @relation("author", fields: [authorid], references: [id])
+
+
+  createdAt DateTime @default(now())
+}
 
 enum Role {
   User
