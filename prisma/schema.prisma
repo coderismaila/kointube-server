@@ -34,6 +34,8 @@ model User {
 
   subscriber Subscribe[] @relation("subscriber")
   author     Subscribe[] @relation("author")
+  Comment    Comment[]
+  Reply      Reply[]
   @@index([id, email, username])
 }
 
@@ -50,6 +52,7 @@ model Video {
   Like      Like[]
   dislike   Dislike[]
   View      View[]
+  Comment   Comment[]
 }
 
 model Like {
@@ -82,6 +85,35 @@ model View {
   channel   User   @relation("channel", fields: [channelid], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+}
+
+model Comment {
+  id String @id @default(cuid())
+
+  content String
+  userid  String
+  videoid String
+
+  user  User  @relation(fields: [userid], references: [id])
+  video Video @relation(fields: [videoid], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Reply     Reply[]
+}
+
+model Reply {
+  id String @id @default(cuid())
+
+  content   String
+  userid    String
+  commentid String
+
+  user    User    @relation(fields: [userid], references: [id])
+  comment Comment @relation(fields: [commentid], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Subscribe {

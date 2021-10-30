@@ -1,10 +1,64 @@
+import { Comment, Reply } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { CommentDto } from '../dto/comment.dto';
+import { ReplyDto } from '../dto/reply.dto';
+import { UpdateReplyDto } from '../dto/update-reply.dto';
 import { ActionDto } from '../dto/video-actions.dto';
 
 @Injectable()
 export class ActionService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  createComment(commentDto: CommentDto): Promise<Comment> {
+    return this.prismaService.comment.create({
+      data: commentDto,
+    });
+  }
+
+  findCommentByVideoId(videoid: string): Promise<Comment[]> {
+    return this.prismaService.comment.findMany({
+      where: {
+        videoid,
+      },
+    });
+  }
+
+  updateComment(id: string, updateComment: UpdateReplyDto): Promise<Comment> {
+    return this.prismaService.comment.update({
+      where: { id },
+      data: updateComment,
+    });
+  }
+
+  deleteComment(id: string): Promise<Comment> {
+    return this.prismaService.comment.delete({ where: { id } });
+  }
+
+  createReply(replyDto: ReplyDto): Promise<Reply> {
+    return this.prismaService.reply.create({
+      data: replyDto,
+    });
+  }
+
+  findAllReplyByCommentId(commentid: string): Promise<Reply[]> {
+    return this.prismaService.reply.findMany({
+      where: {
+        commentid,
+      },
+    });
+  }
+
+  updateReply(id: string, updateDto: UpdateReplyDto): Promise<Reply> {
+    return this.prismaService.reply.update({
+      where: { id },
+      data: updateDto,
+    });
+  }
+
+  deleteReply(id: string): Promise<Reply> {
+    return this.prismaService.reply.delete({ where: { id } });
+  }
 
   async view(actionDto: ActionDto) {
     const views = await this.prismaService.view.findFirst({
