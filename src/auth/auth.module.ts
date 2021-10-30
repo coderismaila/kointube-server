@@ -9,11 +9,13 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigService } from '@nestjs/config';
 import { VideoService } from '../video/services/video.service';
 import { ActionService } from 'src/video/services/action.service';
+import { HistoryService } from 'src/history/history.service';
 
 @Module({
   imports: [JwtModule.registerAsync(jwtConfig)],
   controllers: [AuthController],
   providers: [
+    HistoryService,
     AuthService,
     UsersService,
     VideoService,

@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { HistoryService } from 'src/history/history.service';
 import { PrismaService } from '../../prisma.service';
 import { CreateVideoDto } from '../dto/create-video.dto';
 import { UpdateVideoDto } from '../dto/update-video.dto';
@@ -14,6 +15,7 @@ export class VideoService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly actionService: ActionService,
+    private readonly historyService: HistoryService,
   ) {}
 
   async createVideo(createVideoDto: CreateVideoDto): Promise<Video> {
@@ -84,6 +86,11 @@ export class VideoService {
     });
 
     if (!video) throw new NotFoundException(`video does not exist`);
+
+    await this.historyService.create({
+      userid,
+      videoid,
+    });
 
     const views = await this.actionService.view({
       userid,

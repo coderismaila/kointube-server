@@ -29,6 +29,7 @@ model User {
 
   Like    Like[]
   Dislike Dislike[]
+  History History[]
   user    View[]    @relation("user")
   channel View[]    @relation("channel")
 
@@ -53,6 +54,7 @@ model Video {
   dislike   Dislike[]
   View      View[]
   Comment   Comment[]
+  History History[]
 }
 
 model Like {
@@ -114,6 +116,17 @@ model Reply {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model History {
+  id        String   @id @default(cuid())
+  userid    String
+  videoid   String
+
+  user    User    @relation(fields: [userid], references: [id])
+  video Video @relation(fields: [videoid], references: [id])
+  
+  createdAt DateTime @default(now())
 }
 
 model Subscribe {
