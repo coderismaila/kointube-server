@@ -11,11 +11,14 @@ export class HistoryService {
   create(createHistoryDto: CreateHistoryDto): Promise<History> {
     return this.prismaService.history.create({
       data: createHistoryDto,
+      include: { video: true },
     });
   }
 
   findAll(): Promise<History[]> {
-    return this.prismaService.history.findMany();
+    return this.prismaService.history.findMany({
+      include: { video: true },
+    });
   }
 
   findByUserId(userid: string): Promise<History[]> {
@@ -23,12 +26,14 @@ export class HistoryService {
       where: {
         userid,
       },
+      include: { user: true },
     });
   }
 
   findOneById(id: string): Promise<History> {
     return this.prismaService.history.findFirst({
       where: { id },
+      include: { video: true },
     });
   }
 
@@ -36,12 +41,14 @@ export class HistoryService {
     return this.prismaService.history.update({
       where: { id },
       data: updateHistoryDto,
+      include: { video: true },
     });
   }
 
   remove(id: string): Promise<History> {
     return this.prismaService.history.delete({
       where: { id },
+      include: { video: true },
     });
   }
 }
