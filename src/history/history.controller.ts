@@ -10,7 +10,9 @@ import {
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './dto/create-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('history')
 @Controller('history')
 export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}

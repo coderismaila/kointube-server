@@ -43,6 +43,12 @@ export class VideoController {
     return this.videoService.findAllVideo();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('liked_videos')
+  getLikedVideos(@Request() req) {
+    return this.videoService.getVideosByLike(req.user.id);
+  }
+
   @Get('/channel/:id')
   findAllChannelVideo(@Param('id') id: string) {
     return this.videoService.findAllVideoByChannel(id);

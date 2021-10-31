@@ -79,10 +79,14 @@ export class ActionController {
   // this route is responsible for inserting user in view table
   @UseGuards(JwtAuthGuard)
   @Post('view')
-  viewVideo(@Body() actionDto: ActionDto, @Request() req) {
+  createVideo(@Body() actionDto: ActionDto, @Request() req) {
     actionDto.userid = req.user.id;
     return this.actionService.view(actionDto);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('views')
+  getAllViewsCount() {}
 
   // this route is responsible for liking a video
   @UseGuards(JwtAuthGuard)

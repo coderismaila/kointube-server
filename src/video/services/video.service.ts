@@ -111,6 +111,17 @@ export class VideoService {
     return { ...video, liked: !!userLiked, disliked: !!userDisiked };
   }
 
+  getVideosByLike(userid: string) {
+    return this.prismaService.like.findMany({
+      where: {
+        userid,
+      },
+      include: {
+        video: true,
+      },
+    });
+  }
+
   async getChannelVideoCount(authorid: string) {
     const videos = await this.prismaService.video.count({
       where: {
