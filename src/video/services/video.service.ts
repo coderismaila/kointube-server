@@ -117,7 +117,11 @@ export class VideoService {
         userid,
       },
       include: {
-        video: true,
+        video: {
+          include: {
+            author: true,
+          },
+        },
       },
     });
   }
