@@ -11,7 +11,14 @@ export class HistoryService {
   create(createHistoryDto: CreateHistoryDto): Promise<History> {
     return this.prismaService.history.create({
       data: createHistoryDto,
-      include: { video: true },
+      include: {
+        video: {
+          include: {
+            _count: true,
+            author: true,
+          },
+        },
+      },
     });
   }
 
