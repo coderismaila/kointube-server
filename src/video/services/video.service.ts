@@ -120,6 +120,7 @@ export class VideoService {
         video: {
           include: {
             author: true,
+            _count: true,
           },
         },
       },
