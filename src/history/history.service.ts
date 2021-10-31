@@ -33,14 +33,28 @@ export class HistoryService {
       where: {
         userid,
       },
-      include: { user: true },
+      include: {
+        video: {
+          include: {
+            _count: true,
+            author: true,
+          },
+        },
+      },
     });
   }
 
   findOneById(id: string): Promise<History> {
     return this.prismaService.history.findFirst({
       where: { id },
-      include: { video: true },
+      include: {
+        video: {
+          include: {
+            _count: true,
+            author: true,
+          },
+        },
+      },
     });
   }
 
@@ -48,14 +62,28 @@ export class HistoryService {
     return this.prismaService.history.update({
       where: { id },
       data: updateHistoryDto,
-      include: { video: true },
+      include: {
+        video: {
+          include: {
+            _count: true,
+            author: true,
+          },
+        },
+      },
     });
   }
 
   remove(id: string): Promise<History> {
     return this.prismaService.history.delete({
       where: { id },
-      include: { video: true },
+      include: {
+        video: {
+          include: {
+            _count: true,
+            author: true,
+          },
+        },
+      },
     });
   }
 }
