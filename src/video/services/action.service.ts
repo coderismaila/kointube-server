@@ -13,6 +13,9 @@ export class ActionService {
   createComment(commentDto: CommentDto): Promise<Comment> {
     return this.prismaService.comment.create({
       data: commentDto,
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -21,6 +24,9 @@ export class ActionService {
       where: {
         videoid,
       },
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -28,16 +34,27 @@ export class ActionService {
     return this.prismaService.comment.update({
       where: { id },
       data: updateComment,
+      include: {
+        user: true,
+      },
     });
   }
 
   deleteComment(id: string): Promise<Comment> {
-    return this.prismaService.comment.delete({ where: { id } });
+    return this.prismaService.comment.delete({
+      where: { id },
+      include: {
+        user: true,
+      },
+    });
   }
 
   createReply(replyDto: ReplyDto): Promise<Reply> {
     return this.prismaService.reply.create({
       data: replyDto,
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -46,6 +63,9 @@ export class ActionService {
       where: {
         commentid,
       },
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -53,11 +73,19 @@ export class ActionService {
     return this.prismaService.reply.update({
       where: { id },
       data: updateDto,
+      include: {
+        user: true,
+      },
     });
   }
 
   deleteReply(id: string): Promise<Reply> {
-    return this.prismaService.reply.delete({ where: { id } });
+    return this.prismaService.reply.delete({
+      where: { id },
+      include: {
+        user: true,
+      },
+    });
   }
 
   async view(actionDto: ActionDto) {
@@ -84,6 +112,9 @@ export class ActionService {
     viewCount = await this.getViewCount(actionDto.videoid);
     return {
       views: viewCount,
+      include: {
+        user: true,
+      },
     };
   }
 
