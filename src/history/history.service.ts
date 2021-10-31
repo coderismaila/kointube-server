@@ -25,6 +25,9 @@ export class HistoryService {
   findAll(): Promise<History[]> {
     return this.prismaService.history.findMany({
       include: { video: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
@@ -41,6 +44,9 @@ export class HistoryService {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
@@ -54,6 +60,9 @@ export class HistoryService {
             author: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }

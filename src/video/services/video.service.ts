@@ -124,6 +124,9 @@ export class VideoService {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
